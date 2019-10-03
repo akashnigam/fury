@@ -11,8 +11,9 @@ print('services:',services)
 print()
 for service in services:
     print('SERVICE NAME:',service)
-    serviceObj = json.loads(service)
-    targets = t.get_targets(serviceObj.service_id)
+    #serviceObj = json.loads(service)
+    targets = t.get_targets(service['service_id'])
+    #targets = t.get_targets(10001)
     for target in targets:
         print('TARGET NAME:',target)
 
