@@ -71,14 +71,14 @@ while True:
             flag_id = target['flag_id']
             if service_name == 'no-rsa':
                 try:
-                        exploit_no_rsa(hostname,port,flag_id)
+                	exploit_no_rsa(hostname,port,flag_id)
                 except:
-                print('Exception occured for user')
+                	print 'Exception occured for user'
             #break
     while True:
         newGameStatus = t.get_game_status()
-        newTick = gameStatus['tick']['tick_id']
+        newTick = newGameStatus['tick']['tick_id']
         print 'Checking new tick:',newTick
         if newTick != currentTick:
             break
-        time.sleep(120)
+        time.sleep(60)
