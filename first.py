@@ -32,9 +32,9 @@ print()
 for service in services:
     print 'SERVICE NAME:',service
     print 'SERVICE ID:',service['service_id']
-    print 'service_name:',service_name
     service_id = service['service_id']
     service_name = service['service_name']
+    print 'service_name:',service_name
     targets = t.get_targets(service_id)
     for target in targets:
         print('TARGET NAME:',target)#,netcat(target,''))
