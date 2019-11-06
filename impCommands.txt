@@ -22,22 +22,36 @@ nohup python first.py > output.txt 2>&1 &
 ###########################################################################################################
 
 
-###################################### Download file from server using SCP #################################
+###################################### Download file from server using SCP ################################
 scp -i id_rsa.txt -P1350  ctf@13.52.209.109:/home/ctf/fury/output.txt /Users/akashnigam/DT/data/metroinsight
 ###########################################################################################################
+
 
 ###################################### Upload file to server using SCP ####################################
 scp -i id_rsa.txt -P1350 /Users/akashnigam/git/fury/first.py ctf@13.52.209.109:/home/ctf/fury/
 ###########################################################################################################
 
-###################################### Download file from server using SFTP #################################
+
+###################################### Download file from server using SFTP ###############################
 sftp -i id_rsa.txt -oPort=1350 ctf@13.52.209.109:/home/ctf/fury/id_rsa_new.txt /Users/akashnigam/DT/data/metroinsight
 ###########################################################################################################
+
 
 ###################################### Upload file to server using SFTP ###################################
 sftp -i id_rsa.txt -oPort=1350 ctf@13.52.209.109:/home/ctf/fury/ <<< $'put /Users/akashnigam/git/fury/first.py'
 ###########################################################################################################
 
-ssh -i id_rsa.txt -p 1350 ctf@54.67.115.99
-ssh -i id_rsa_root.txt -p 1350 root@54.67.115.99
+
+############# Create ZIP file and download ################################################################ 
+# To install zip (login with root user to execute this command)
+apt-get install zip
+# To create zip file from ctf directory in server
+zip -r /opt/ctf.zip /opt/ctf
+# To download zip file from server to local machine(needs to be executed from local machine)
+scp -i id_rsa.txt -P1350  ctf@184.169.231.202:/opt/ctf.zip /Users/akashnigam/stuff/StudyMaterial/SoftwareSecurityCSE545/CTF3
+###########################################################################################################
+
+ssh -i id_rsa.txt -p 1350 ctf@184.169.231.202
+ssh -i id_rsa_root.txt -p 1350 root@184.169.231.202
 scp -i id_rsa.txt -P1350  ctf@54.67.115.99:/opt/ctf.zip /Users/akashnigam/stuff/StudyMaterial/SoftwareSecurityCSE545/CTF2
+tcpdump -i eth0 port 20003 -v -A
