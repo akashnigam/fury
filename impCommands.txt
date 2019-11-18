@@ -14,6 +14,9 @@ tcpdump -i eth0 port 20001 -v -A
 # port 20001
 # -v verbose
 # -A print in ASCII character
+
+tcpdump -i eth0 -w fileName.pcap
+# To capture traffic and write in file
 ###########################################################################################################
 
 
