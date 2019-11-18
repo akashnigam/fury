@@ -60,3 +60,18 @@ ssh -i id_rsa.txt -p 1350 ctf@184.169.231.202
 ssh -i id_rsa_root.txt -p 1350 root@184.169.231.202
 scp -i id_rsa.txt -P1350  ctf@54.67.115.99:/opt/ctf.zip /Users/akashnigam/stuff/StudyMaterial/SoftwareSecurityCSE545/CTF2
 tcpdump -i eth0 port 20003 -v -A
+
+
+nohup tcpdump -i eth0 -w myCapture.pcap &
+
+nohup tcpdump -i eth0 port 20001 -w contactBook.pcap &
+nohup tcpdump -i eth0 port 20002 -w gdbc.pcap &
+nohup tcpdump -i eth0 port 20003 -w wcaas.pcap &
+
+nohup tcpdump -i eth0 port 20001 -v -A > c1.txt &
+nohup tcpdump -i eth0 port 20002 -v -A > g1.txt &
+nohup tcpdump -i eth0 port 20003 -v -A > w1.txt &
+
+scp -i id_rsa.txt -P1350  ctf@50.18.96.195:/home/ctf/fury/myCapture.pcap /Users/akashnigam/stuff/StudyMaterial/SoftwareSecurityCSE545/CTF4
+
+
