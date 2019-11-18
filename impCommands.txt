@@ -41,6 +41,8 @@ sftp -i id_rsa.txt -oPort=1350 ctf@13.52.209.109:/home/ctf/fury/id_rsa_new.txt /
 sftp -i id_rsa.txt -oPort=1350 ctf@13.52.209.109:/home/ctf/fury/ <<< $'put /Users/akashnigam/git/fury/first.py'
 ###########################################################################################################
 
+nohup tcpdump -i eth0 port 20002 -v -A > dungeonTcpDump.txt 2>&1 &
+
 
 ############# Create ZIP file and download ################################################################ 
 # To install zip (login with root user to execute this command)
