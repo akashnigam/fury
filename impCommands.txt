@@ -53,11 +53,11 @@ apt-get install zip
 # To create zip file from ctf directory in server
 zip -r /opt/ctf.zip /opt/ctf
 # To download zip file from server to local machine(needs to be executed from local machine)
-scp -i id_rsa.txt -P1350  ctf@184.169.231.202:/opt/ctf.zip /Users/akashnigam/stuff/StudyMaterial/SoftwareSecurityCSE545/CTF3
+scp -i id_rsa.txt -P1350  ctf@13.56.104.107:/opt/ctf.zip /Users/akashnigam/stuff/StudyMaterial/SoftwareSecurityCSE545/CTF5
 ###########################################################################################################
 
-ssh -i id_rsa.txt -p 1350 ctf@184.169.231.202
-ssh -i id_rsa_root.txt -p 1350 root@184.169.231.202
+ssh -i id_rsa.txt -p 1350 ctf@13.56.104.107
+ssh -i id_rsa_root.txt -p 1350 root@13.56.104.107
 scp -i id_rsa.txt -P1350  ctf@54.67.115.99:/opt/ctf.zip /Users/akashnigam/stuff/StudyMaterial/SoftwareSecurityCSE545/CTF2
 tcpdump -i eth0 port 20003 -v -A
 
@@ -72,6 +72,8 @@ nohup tcpdump -i eth0 port 20001 -v -A > c1.txt &
 nohup tcpdump -i eth0 port 20002 -v -A > g1.txt &
 nohup tcpdump -i eth0 port 20003 -v -A > w1.txt &
 
-scp -i id_rsa.txt -P1350  ctf@50.18.96.195:/home/ctf/fury/myCapture.pcap /Users/akashnigam/stuff/StudyMaterial/SoftwareSecurityCSE545/CTF4
+scp -i id_rsa.txt -P1350  ctf@50.18.96.195:/home/ctf/fury/contactBook.pcap /Users/akashnigam/stuff/StudyMaterial/SoftwareSecurityCSE545/CTF4
+scp -i id_rsa.txt -P1350  ctf@50.18.96.195:/home/ctf/fury/gdbc.pcap /Users/akashnigam/stuff/StudyMaterial/SoftwareSecurityCSE545/CTF4
+scp -i id_rsa.txt -P1350  ctf@50.18.96.195:/home/ctf/fury/wcaas.pcap /Users/akashnigam/stuff/StudyMaterial/SoftwareSecurityCSE545/CTF4
 
 
