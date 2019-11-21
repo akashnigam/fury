@@ -64,9 +64,9 @@ tcpdump -i eth0 port 20003 -v -A
 
 nohup tcpdump -i eth0 -w myCapture.pcap &
 
-nohup tcpdump -i eth0 port 20001 -w contactBook.pcap &
+nohup tcpdump -i eth0 port 20001 -w wcaas.pcap &
 nohup tcpdump -i eth0 port 20002 -w gdbc.pcap &
-nohup tcpdump -i eth0 port 20003 -w wcaas.pcap &
+nohup tcpdump -i eth0 port 20003 -w tweetybird.pcap &
 
 nohup tcpdump -i eth0 port 20001 -v -A > c1.txt &
 nohup tcpdump -i eth0 port 20002 -v -A > g1.txt &
