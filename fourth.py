@@ -56,7 +56,7 @@ def exploit_dungeon(hostname, port, flagId):
 #exploit_dungeon('localhost', 20002, 'flag19')
 #exit()
 
-t = Team("http://13.52.117.207/", "gzS3UELBqGH1UgeEMGtQMMj8HdNMoJsC")
+t = Team("http://52.9.73.146/", "y0o3RPgyhKPENe7AMuMFbl06WYOQPBOr")
 print(t.game_url)
 #print(t.get_vm())
 while True:
