@@ -54,9 +54,14 @@ apt-get install zip
 zip -r /opt/ctf.zip /opt/ctf
 # To download zip file from server to local machine(needs to be executed from local machine)
 scp -i id_rsa.txt -P1350  ctf@13.56.104.107:/opt/ctf.zip /Users/akashnigam/stuff/StudyMaterial/SoftwareSecurityCSE545/CTF5
+
+ssh -i id_rsa.txt -p 1341 ctf@13.52.225.71
+scp -r -i ../id_rsa.txt -P1341 ctf@13.52.225.71:/home/ctf ./
 ###########################################################################################################
 
-ssh -i id_rsa.txt -p 1350 ctf@13.56.104.107
+13.52.225.71:1341
+
+ssh -i id_rsa.txt -p 1341 ctf@13.52.225.71
 ssh -i id_rsa_root.txt -p 1350 root@13.56.104.107
 scp -i id_rsa.txt -P1350  ctf@54.67.115.99:/opt/ctf.zip /Users/akashnigam/stuff/StudyMaterial/SoftwareSecurityCSE545/CTF2
 tcpdump -i eth0 port 20003 -v -A
